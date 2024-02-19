@@ -1,0 +1,8 @@
+torch==2.2.0
+tqdm
+tensorboard
+accelerate>=0.26.0
+wandb
+torchvision>=0.17.0+cu121
+matplotlib
+numpy==1.26.3
