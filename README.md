@@ -26,6 +26,14 @@ and start the pre-train process & fine-tune process
 
 Comments of args are given in [main.py](https://github.com/RDR2Blackwater/SimCLR-v1/blob/master/main.py)
 
+## Known bugs
+
+When I analyse the structure and params of the implemented simclr_resnet50, the activation function of bottleneck will be repeated for 16 times after every batch norm layer.
+
+![](pics/bug.png)
+
+I have no idea about why it happens. Though multiple ReLU activation functions won't change the origin value, it may delay the forward process during training.
+
 ## References:
 
 [A Simple Framework for Contrastive Learning of Visual Representations](https://arxiv.org/abs/2002.05709)
