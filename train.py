@@ -75,7 +75,6 @@ class SimCLR_trainer(object):
                                      drop_last=True)
 
         # Pretrain model
-        # pretrain_model = SimCLR_series.SimCLR_v1(self.conf.backbone, self.conf.features, self.conf.width_multiplier)
         pretrain_model = SimCLR_series.SimCLR_v1(self.conf.backbone, self.conf.width_multiplier, self.conf.features)
 
         # Optimizer & Scheduler
@@ -194,7 +193,7 @@ class SimCLR_trainer(object):
         valid_loader = DataLoader(valid_set, batch_size=self.conf.finetune_batchsize, shuffle=False, num_workers=2)
 
         # Replace the former projection head with a linear classifier, then load the state dict
-        finetune_model = SimCLR_series.SimCLR_v1(self.conf.backbone, self.conf.features, self.conf.width_multiplier)
+        finetune_model = SimCLR_series.SimCLR_v1(self.conf.backbone, self.conf.width_multiplier, self.conf.features)
         finetune_model.backbone.fc = nn.Linear(2048 * self.conf.width_multiplier if self.conf.backbone == 'simclr_resnet50' else 1, 10)
 
         pretrained_dict = torch.load(model_state_dict)
@@ -314,7 +313,7 @@ class SimCLR_trainer(object):
 
         # ---------- Testing ----------
         # Replace the former projection head with a linear classifier, then load the state dict
-        model_best = SimCLR_series.SimCLR_v1(self.conf.backbone, self.conf.features, self.conf.width_multiplier)
+        model_best = SimCLR_series.SimCLR_v1(self.conf.backbone, self.conf.width_multiplier, self.conf.features)
         model_best.backbone.fc = nn.Linear(2048 * self.conf.width_multiplier if self.conf.backbone == 'simclr_resnet50' else 1, 10)
 
         finetune_best = torch.load("./SimCLRv1/finetune_best.ckpt")
