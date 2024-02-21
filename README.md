@@ -47,6 +47,8 @@ Stronger data augmentation will greatly benifit the fine-tune. However, to ensur
 
 Although longer pre-training will benefit the backbone, small batch size would limit the feature extraction, and leads to optimization fail.
 
+![](pics/Pre-train%20loss.png)
+
 ## Known issues
 
 When I analyse the structure and params of the implemented simclr_resnet50, the activation function of bottleneck will be repeated for 16 times after every batch norm layer.
