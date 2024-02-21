@@ -154,11 +154,11 @@ class SimCLR_trainer(object):
                 self.accelerator.wait_for_everyone()
                 print("Saving checkpoints...")
                 self.accelerator.save(self.accelerator.unwrap_model(model).state_dict(),
-                                      f"./CheckPoints/SimCLRv1/backbone_checkpoint_{epoch + 1}_{self.conf.width_multiplier}.pt")
+                                      f"./CheckPoints/ResNet50_{self.conf.width_multiplier}/backbone_checkpoint_{epoch + 1}_{self.conf.width_multiplier}.pt")
                 self.accelerator.save(optimizer.state_dict(),
-                                      f"./CheckPoints/SimCLRv1/optimizer_checkpoint_{epoch + 1}_{self.conf.width_multiplier}.pt")
+                                      f"./CheckPoints/ResNet50_{self.conf.width_multiplier}/optimizer_checkpoint_{epoch + 1}_{self.conf.width_multiplier}.pt")
                 self.accelerator.save(scheduler.state_dict(),
-                                      f"./CheckPoints/SimCLRv1/scheduler_checkpoint_{epoch + 1}_{self.conf.width_multiplier}.pt")
+                                      f"./CheckPoints/ResNet50_{self.conf.width_multiplier}/scheduler_checkpoint_{epoch + 1}_{self.conf.width_multiplier}.pt")
                 print("Completed!")
 
         # Release Connection to wandb
@@ -301,7 +301,7 @@ class SimCLR_trainer(object):
             if avg_valid_acc > best_acc:
                 print(f"Best model found at epoch {epoch}, saving model")
                 self.accelerator.save(self.accelerator.unwrap_model(finetune_model).state_dict(),
-                                      f"./SimCLRv1/finetune_best.ckpt")
+                                      f"./ResNet50_{self.conf.width_multiplier}/_finetune_best.ckpt")
                 best_acc = avg_valid_acc
 
             # Release Connection to wandb
@@ -316,7 +316,7 @@ class SimCLR_trainer(object):
         model_best = SimCLR_series.SimCLR_v1(self.conf.backbone, self.conf.width_multiplier, self.conf.features)
         model_best.backbone.fc = nn.Linear(2048 * self.conf.width_multiplier if self.conf.backbone == 'simclr_resnet50' else 1, 10)
 
-        finetune_best = torch.load("./SimCLRv1/finetune_best.ckpt")
+        finetune_best = torch.load("./ResNet50_{self.conf.width_multiplier}/finetune_best.ckpt")
         model_best.load_state_dict(finetune_best)
 
         model_best.eval()
