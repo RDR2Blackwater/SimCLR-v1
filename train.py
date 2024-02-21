@@ -214,7 +214,7 @@ class SimCLR_trainer(object):
 
         # wandb initialize
         if self.conf.wandb_key:
-            proj_name = f'SimCLR v1 ResNet50×{self.conf.width_multiplier} - Classification fine-tune ResNet50 in 10% CIFAR-10'
+            proj_name = f'SimCLR v1 ResNet50*{self.conf.width_multiplier} via {self.conf.epochs} pre-train epochs - Classification fine-tune ResNet50 in 10% CIFAR-10'
             wandb.init(project="SimCLR v1", name=proj_name, config={
                 "n_epochs": self.conf.fine_tune_epochs, "batch_size": self.conf.finetune_batchsize,
                 "learning_rate": self.conf.finetune_lr})
