@@ -27,6 +27,26 @@ and start the pre-train process & fine-tune process
 
 Comments of args are given in [main.py](https://github.com/RDR2Blackwater/SimCLR-v1/blob/master/main.py)
 
+## Transfer learning via fine-tune
+
+The model will learn features using SimCLR v1 in ```STL-10 unlabeled``` dataset in **SimCLR_pretrain**, and then **SimCLR_classifier_finetune** will execute the transfer learning via fine-tune in CIFAR-10 dataset. The nonlinear projection head will be replace with a single linear head, and the whole network will be fine-tuned during training.
+
+I evaluated SimCLR v1 models with different epochs & width-multiplier, and tested their top-1 accuracy while training on 10% and 100% CIFAR-10 train dataset. In comparison, I also tested the top-1 accuracy while training on 10% and 100% CIFAR-10 train dataset using origin ResNet-50 as baseline. 
+
+Stronger data augmentation will greatly benifit the fine-tune. However, to ensure fairness, all models use the same transformation strategy in the fine-tune phase: Resize and CenterCrop
+
+| Feature extractor | Backbone architecture | Feature dimensionality | Projection head dimensionality | pre-train batchsize | pre-train epochs | fine-tune epochs | Training dataset percentage | Top-1 Accuracy |
+| ----------------- | --------------------- | ---------------------- | ------------------------------ | ------------------- | ---------------- | ---------------- | --------------------------- | -------------- |
+| N/A | ResNet-50 | 2048 | N/A | N/A | N/A | 100 | 10% | 44.05% |
+| N/A | ResNet-50 | 2048 | N/A | N/A | N/A | 100 | 100% | 77.85% |
+| SimCLR v1 | ResNet-50 | 2048 | 1024 | 256 | 50 | 100 | 10% | 71.58% |
+| SimCLR v1 | ResNet-50 | 2048 | 1024 | 256 | 100 | 100 | 10% | 71.75% |
+| SimCLR v1 | ResNet-50 | 2048 | 1024 | 256 | 100 | 100 | 100% | 86.35% |
+| SimCLR v1 | ResNet-50×2 (simclr_resnet50) | 4096 | 1024 | 256 | 100 | 400 | 10% | 78.69% |
+| SimCLR v1 | ResNet-50×2 (simclr_resnet50) | 4096 | 1024 | 256 | 100 | 500 | 10% | 77.85% |
+
+Although longer pre-training will benefit the backbone, small batch size would limit the feature extraction, and leads to optimization fail.
+
 ## Known issues
 
 When I analyse the structure and params of the implemented simclr_resnet50, the activation function of bottleneck will be repeated for 16 times after every batch norm layer.
