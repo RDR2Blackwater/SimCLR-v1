@@ -78,7 +78,7 @@ def SimCLR_main():
     # Start training
     agent = SimCLR_trainer(conf=args)
     agent.SimCLR_pretrain()
-    agent.SimCLR_classifier_finetune(model_state_dict=f"./CheckPoints/SimCLRv1/backbone_checkpoint_{args.epochs}_{args.width_multiplier}.pt")
+    agent.SimCLR_classifier_finetune(model_state_dict=f"./CheckPoints/ResNet50_{self.conf.width_multiplier}/backbone_checkpoint_{args.epochs}_{args.width_multiplier}.pt")
 
 
 if __name__ == '__main__':
