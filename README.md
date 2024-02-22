@@ -42,8 +42,8 @@ Stronger data augmentation will greatly benifit the fine-tune. However, to ensur
 | SimCLR v1 | ResNet-50 | 2048 | 1024 | 256 | 50 | 100 | 10% | 71.58% |
 | SimCLR v1 | ResNet-50 | 2048 | 1024 | 256 | 100 | 100 | 10% | 71.75% |
 | SimCLR v1 | ResNet-50 | 2048 | 1024 | 256 | 100 | 100 | 100% | 86.35% |
-| SimCLR v1 | ResNet-50×2 (simclr_resnet50) | 4096 | 1024 | 256 | 100 | 400 | 10% | 78.69% |
-| SimCLR v1 | ResNet-50×2 (simclr_resnet50) | 4096 | 1024 | 256 | 100 | 500 | 10% | 77.85% |
+| SimCLR v1 | ResNet-50×2 (simclr_resnet50) | 4096 | 1024 | 256 | 400 | 100 | 10% | 78.69% |
+| SimCLR v1 | ResNet-50×2 (simclr_resnet50) | 4096 | 1024 | 256 | 500 | 100 | 10% | 77.85% |
 
 Although longer pre-training will benefit the backbone, small batch size would limit the feature extraction, and leads to optimization fail.
 
