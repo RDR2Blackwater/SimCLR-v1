@@ -55,7 +55,7 @@ When I analyse the structure and params of the implemented simclr_resnet50, the 
 
 ![](pics/bug.png)
 
-I have no idea about why it happens. Though multiple ReLU activation functions won't change the origin value, it may delay the forward process during training.
+I have no idea about why it happens. Though multiple ReLU activation functions won't change the original value, it may delay the forward process during training.
 
 ## References:
 
