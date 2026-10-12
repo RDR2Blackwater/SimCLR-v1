@@ -109,7 +109,7 @@ class SimCLR_trainer(object):
         for epoch in range(self.conf.epochs):
             zi_record: List[Tensor] = []
             zj_record: List[Tensor] = []
-            accumulation_counter = 1
+            accumulation_counter = 0
             train_loss = []
 
             for batch in tqdm(dataloader):
@@ -124,7 +124,7 @@ class SimCLR_trainer(object):
                     optimizer.zero_grad()
                     self.accelerator.backward(loss)
                     optimizer.step()
-                    train_loss.append(loss)
+                    train_loss.append(loss.item())
                 else:
                     zi_record.append(zi)
                     zj_record.append(zj)
@@ -133,7 +133,8 @@ class SimCLR_trainer(object):
                         optimizer.zero_grad()
                         self.accelerator.backward(loss)
                         optimizer.step()
-                        train_loss.append(loss)
+                        zi_record.clear()
+                        train_loss.append(loss.item())
 
                 accumulation_counter += 1
 
